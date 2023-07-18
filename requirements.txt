@@ -1,0 +1,2 @@
+polars==0.17.15
+more-itertools==9.1.0
