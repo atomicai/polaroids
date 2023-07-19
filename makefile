@@ -2,6 +2,7 @@ NAME := $(shell python setup.py --name)
 UNAME := $(shell uname -s)
 
 FLAKE_FLAGS=--in-place --remove-all-unused-imports --remove-unused-variable --recursive
+FLAGE_FLAGS_DIFF=--remove-all-unused-imports --remove-unused-variable --recursive
 # "" is for multi-lang strings (comments, logs), '' is for everything else.
 # BLACK_FLAGS=--skip-string-normalization --line-length=${LINE_WIDTH}
 PYTEST_FLAGS=-p no:warnings
@@ -19,11 +20,15 @@ init:
   	# To check whole pipeline.
 	# pre-commit run --all-files
 
+formatdiff:
+	black polaroids tests --diff
+	isort polaroids tests --diff
+	autoflake -r ${FLAKE_FLAGS_DIFF} polaroids tests
 
 format:
-	black external vkai test
-	isort external vkai test
-	autoflake ${FLAKE_FLAGS} external vkai test
+	black polaroids tests
+	isort polaroids tests
+	autoflake -r ${FLAKE_FLAGS} polaroids tests
 
 test:
 	pytest test ${PYTEST_FLAGS} --testmon --suppress-no-test-exit-code
