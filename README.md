@@ -4,4 +4,4 @@
 
 **POLARoidS**
 
-Built on top of <a href="https://www.pola.rs">polars</a> library to accelerate NLP processing of the huge datasets.
+
