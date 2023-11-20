@@ -1,2 +1,6 @@
 polars==0.17.15
+pytgbot==5.7
+teleflask==1.0.1
+Flask==3.0.0
+Flask-Session==0.5.0
 more-itertools==9.1.0
