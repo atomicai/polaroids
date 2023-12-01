@@ -10,6 +10,7 @@ from flask import Flask
 # also we want to send cool inline buttons below, so we need to import:
 from pytgbot.api_types.sendable.reply_markup import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
 from teleflask import Teleflask
+from loguru import logger
 
 # because we wanna send HTML formatted messages below, we need:
 from teleflask.messages import HTMLMessage, TextMessage
@@ -53,7 +54,7 @@ def start(update, text):
 def some_function(update, msg):
     query = msg.text.strip()
     print(f"Query ### {query}\n")
-    response = generate_answer(prompt=query)
+    response = "Some dummy response"
     machine.set("CONFIRM_DATA", data={"query": query, "response": response})
     return HTMLMessage(
         f"<u>Вопрос:</u> {escape(query)}\n---\n<u>Ответ:</u> {response}",
@@ -72,6 +73,8 @@ def some_function(update, msg):
 
 @machine.CONFIRM_DATA.on_update("callback_query")
 def btn_confirm(update):
+    logger.log(f"Got request on CONFIRM DATA state")
+    logger.log(f"See {update}")
     query = machine.CURRENT.data["query"]
     response = machine.CURRENT.data["response"]
     print(update)
